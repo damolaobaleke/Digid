@@ -1,5 +1,7 @@
 package com.eazifunds.efid
-
+/**Written by Oyindamola Obaleke
+ * 1/14/2020
+ * All rights reserved Softroniiks inc*/
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -32,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         Handler().postDelayed({ progressbar.visibility = View.GONE }, SPLASH_TIME_OUT)
 
         val runnable = Runnable {
-            val intent = Intent(this,ExecList::class.java)
+            val intent = Intent(this,AdminLogin::class.java)
             startActivity(intent)
         }
 
