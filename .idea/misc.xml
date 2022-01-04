@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/custom_buttons.xml" value="0.2898148148148148" />
+        <entry key="app/src/main/res/drawable/custom_scan_button.xml" value="0.2898148148148148" />
+        <entry key="app/src/main/res/drawable/custom_spinner_bg_ids.xml" value="0.2898148148148148" />
+        <entry key="app/src/main/res/drawable/ic_baseline_credit_card_120.xml" value="0.2898148148148148" />
+        <entry key="app/src/main/res/drawable/ic_baseline_perm_identity_24.xml" value="0.2898148148148148" />
+        <entry key="app/src/main/res/drawable/ic_outline_credit_card_24.xml" value="0.2898148148148148" />
+        <entry key="app/src/main/res/drawable/ic_softroniiks_brand_logo.xml" value="0.2898148148148148" />
+        <entry key="app/src/main/res/drawable/rounded_dialogue.xml" value="0.2898148148148148" />
+        <entry key="app/src/main/res/layout/account_fragment.xml" value="0.27546296296296297" />
+        <entry key="app/src/main/res/layout/activity_id_navigatigation.xml" value="0.27546296296296297" />
+        <entry key="app/src/main/res/layout/activity_id_navigation.xml" value="0.27546296296296297" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.27546296296296297" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.27546296296296297" />
+        <entry key="app/src/main/res/layout/auth_fragment.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/custom_add_id_sheet.xml" value="0.27546296296296297" />
+        <entry key="app/src/main/res/layout/custom_card_dialogue.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/custom_card_view.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_card.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.27546296296296297" />
+        <entry key="app/src/main/res/layout/fragment_identity.xml" value="0.27546296296296297" />
+        <entry key="app/src/main/res/layout/fragment_invoice.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/sign_up_activity.xml" value="0.27546296296296297" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.27546296296296297" />
+        <entry key="app/src/main/res/menu/menu_main.xml" value="0.27546296296296297" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.17962962962962964" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

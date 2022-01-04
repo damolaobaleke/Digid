@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigation_card"
+        android:icon="@drawable/ic_outline_credit_card_24"
+        app:iconTint="@color/blue"
+        android:title="@string/cards" />
+
+    <item
+        android:id="@+id/navigation_identity"
+        android:icon="@drawable/ic_baseline_perm_identity_24"
+        app:iconTint="@color/blue"
+        android:title="@string/id_s" />
+
+    <item
+        android:id="@+id/navigation_invoices"
+        android:icon="@drawable/ic_baseline_receipt_long_24"
+        app:iconTint="@color/blue"
+        android:title="@string/invoices" />
+
+
+</menu>

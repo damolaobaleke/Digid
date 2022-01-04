@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_card">
+
+    <fragment
+        android:id="@+id/navigation_card"
+        android:name="com.softroniiks.digid.views.ids.ui.card.CardFragment"
+        android:label="Cards"
+        tools:layout="@layout/fragment_card" >
+        <action
+            android:id="@+id/action_navigation_card_to_navigation_identity"
+            app:destination="@id/navigation_identity"
+            app:enterAnim="@animator/mb_card_flip_blinkid_1" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_identity"
+        android:name="com.softroniiks.digid.views.ids.ui.identity.IdentityFragment"
+        android:label="Id's"
+        tools:layout="@layout/fragment_identity" >
+        <action
+            android:id="@+id/action_navigation_identity_to_navigation_invoices"
+            app:destination="@id/navigation_invoices"
+            app:enterAnim="@animator/mb_card_flip_blinkid_1" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_invoices"
+        android:name="com.softroniiks.digid.views.ids.ui.invoice.InvoiceFragment"
+        android:label="Invoices"
+        tools:layout="@layout/fragment_invoice" >
+<!--        <action-->
+<!--            android:id="@+id/action_navigation_invoices_to_navigation_account"-->
+<!--            app:destination="@id/navigation_account"-->
+<!--            app:enterAnim="@animator/mb_card_flip_blinkid_1"/>-->
+    </fragment>
+
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_account"-->
+<!--        android:name="com.softroniiks.digid.views.account.AccountFragment"-->
+<!--        android:label="Accounts"-->
+<!--        tools:layout="@layout/account_fragment" />-->
+</navigation>

@@ -3,7 +3,9 @@
     <color name="colorPrimary">#F82945E6</color>
     <color name="colorPrimaryDark">#000707</color>
     <color name="colorAccent">#F82945E6</color>
-    <color name="eazifunds_blue">#F8081C8D</color>
+    <color name="blue">#0433B8</color>
     <color name="efblue">#28388f</color>
     <color name="eazifundsgreen">#94c947</color>
+    <color name="softroniiks_blue">#1B1464</color>
+    <color name="light_grey">#CFD2DD</color>
 </resources>

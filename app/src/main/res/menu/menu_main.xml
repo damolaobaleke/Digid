@@ -1,9 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.eazifunds.efid.MainActivity">
+    tools:context="com.eazifunds.digid.MainActivity">
     <item
-        android:id="@+id/LogOut"
+        android:id="@+id/log_out"
         android:orderInCategory="100"
         android:title="Log Out"
         app:showAsAction="never" />

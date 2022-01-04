@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/idRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/driverLicenseImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/fullName"
+        style="@style/identityInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text=""
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="@+id/driverLicenseImage"
+        app:layout_constraintStart_toStartOf="@+id/driverLicenseImage"
+        app:layout_constraintTop_toBottomOf="@+id/driverLicenseImage" />
+
+    <TextView
+        android:id="@+id/exp"
+        style="@style/identityInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="exp:"
+        app:layout_constraintStart_toStartOf="@+id/docNumber"
+        app:layout_constraintTop_toBottomOf="@+id/docNumber" />
+
+    <TextView
+        android:id="@+id/driverLclass"
+        style="@style/identityInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:text="Class:"
+        app:layout_constraintStart_toEndOf="@+id/documentNumber"
+        app:layout_constraintTop_toTopOf="@+id/docNumber" />
+
+    <TextView
+        android:id="@+id/docNumber"
+        style="@style/identityInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:text="Number:"
+        app:layout_constraintStart_toEndOf="@+id/driverLicenseImage"
+        app:layout_constraintTop_toTopOf="@+id/driverLicenseImage" />
+
+    <TextView
+        android:id="@+id/documentNumber"
+        style="@style/identityInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/docNumber"
+        app:layout_constraintTop_toTopOf="@+id/docNumber" />
+
+    <TextView
+        android:id="@+id/expiryDate"
+        style="@style/identityInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@+id/exp"
+        app:layout_constraintTop_toTopOf="@+id/exp" />
+
+    <TextView
+        android:id="@+id/address"
+        style="@style/identityInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/exp"
+        app:layout_constraintTop_toBottomOf="@+id/expiryDate" />
+
+    <TextView
+        android:id="@+id/textView10"
+        style="@style/identityInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="sex:"
+        app:layout_constraintStart_toStartOf="@+id/address"
+        app:layout_constraintTop_toBottomOf="@+id/address" />
+
+    <TextView
+        android:id="@+id/dob"
+        style="@style/identityInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="dob:"
+        app:layout_constraintStart_toStartOf="@+id/driverLclass"
+        app:layout_constraintTop_toBottomOf="@+id/driverLclass" />
+
+    <TextView
+        android:id="@+id/dateOfBirth"
+        style="@style/identityInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/dob"
+        app:layout_constraintTop_toTopOf="@+id/dob" />
+
+    <TextView
+        android:id="@+id/sex"
+        style="@style/identityInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/textView10"
+        app:layout_constraintStart_toEndOf="@+id/textView10"
+        app:layout_constraintTop_toTopOf="@+id/textView10"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/keep"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="14dp"
+        android:text="Keep"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/dateOfBirth"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/vehicleClass"
+        style="@style/identityInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/driverLclass"
+        app:layout_constraintStart_toEndOf="@+id/driverLclass"
+        app:layout_constraintTop_toTopOf="@+id/driverLclass"
+        app:layout_constraintVertical_bias="0.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
