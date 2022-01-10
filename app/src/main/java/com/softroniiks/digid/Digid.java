@@ -10,7 +10,13 @@ public class Digid extends Application {
     public void onCreate() {
         super.onCreate();
 
+
+        //blink id --> License expired
         MicroblinkSDK.setLicenseFile("license.key", this);
-        //MicroblinkSDK.setLicenseFile("blinkcardlicense.key", this);
+
+        //blink card
+        com.microblink.blinkcard.MicroblinkSDK.setLicenseFile("blinkcardlicense.key", this);
+
+
     }
 }

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="5dp"
+    android:layout_marginTop="10dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="20dp"
+    app:strokeColor="@color/light_grey"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="35dp">
+
+        <TextView
+            android:id="@+id/debitCardNumber"
+            style="@style/cardInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="32dp"
+            android:gravity=""
+            android:text="cardNumber"
+            android:textFontWeight="900"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/debitCardFullName"
+            style="@style/cardInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="fullName"
+            android:textFontWeight="900"
+            app:layout_constraintStart_toStartOf="@+id/debitCardNumber"
+            app:layout_constraintTop_toBottomOf="@+id/debitCardNumber" />
+
+        <TextView
+            android:id="@+id/debitCardExpDate"
+            style="@style/cardInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textFontWeight="900"
+            app:layout_constraintEnd_toEndOf="@+id/debitCardNumber"
+            app:layout_constraintTop_toTopOf="@+id/debitCardFullName" />
+
+        <TextView
+            android:id="@+id/debitCardCvv"
+            style="@style/cardInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="start"
+            android:text="TextView"
+            android:textFontWeight="900"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/debitCardFullName"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/debitCardFullName"
+            app:layout_constraintTop_toBottomOf="@+id/debitCardFullName" />
+
+
+        <ImageView
+            android:id="@+id/debitCardIssuerImage"
+            tools:srcCompat="@tools:sample/avatars"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="@+id/debitCardExpDate"
+            app:layout_constraintTop_toBottomOf="@+id/debitCardExpDate" />
+
+        <android.widget.Button
+            android:id="@+id/showCVV"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_open_eye_24"
+            app:layout_constraintStart_toStartOf="@+id/debitCardCvv"
+            app:layout_constraintTop_toBottomOf="@+id/debitCardCvv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

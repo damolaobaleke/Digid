@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="20dp">
+
+    <TextView
+        android:id="@+id/cardNumber"
+        style="@style/cardInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="32dp"
+        android:gravity=""
+        android:text="cardNumber"
+        android:textFontWeight="900"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/cardFullName"
+        style="@style/cardInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="fullName"
+        android:textFontWeight="900"
+        app:layout_constraintStart_toStartOf="@+id/cardNumber"
+        app:layout_constraintTop_toBottomOf="@+id/cardNumber" />
+
+    <TextView
+        android:id="@+id/debitCardExpDate"
+        style="@style/cardInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textFontWeight="900"
+        app:layout_constraintEnd_toEndOf="@+id/cardNumber"
+        app:layout_constraintTop_toTopOf="@+id/cardFullName" />
+
+    <TextView
+        android:id="@+id/debitCardCvv"
+        style="@style/cardInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="start"
+        android:text="TextView"
+        android:textFontWeight="900"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/cardFullName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/cardFullName"
+        app:layout_constraintTop_toBottomOf="@+id/cardFullName" />
+
+    <TextView
+        android:id="@+id/revealCvvText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="130dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/axiforma_black"
+        android:text="@string/reveal_cvv"
+        android:textColor="@color/mb_black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/cardNumber"
+        app:layout_constraintStart_toStartOf="@+id/cardNumber"
+        app:layout_constraintTop_toBottomOf="@+id/cardNumber" />
+
+    <ImageView
+        android:id="@+id/cardIssuerImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/debitCardExpDate"
+        app:layout_constraintTop_toBottomOf="@+id/debitCardExpDate"
+        tools:srcCompat="@tools:sample/avatars" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

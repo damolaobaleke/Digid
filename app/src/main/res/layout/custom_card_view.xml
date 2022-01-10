@@ -6,12 +6,13 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="5dp"
     android:layout_marginTop="10dp"
+    android:animateLayoutChanges="true"
     android:clickable="true"
     android:elevation="10dp"
-    app:strokeColor="@color/light_grey"
-    app:strokeWidth="1dp"
     android:focusable="true"
-    app:cardCornerRadius="15dp">
+    app:cardCornerRadius="15dp"
+    app:strokeColor="@color/light_grey"
+    app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/idRoot"

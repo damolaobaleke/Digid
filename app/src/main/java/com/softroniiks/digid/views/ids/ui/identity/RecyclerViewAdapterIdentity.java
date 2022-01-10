@@ -29,7 +29,7 @@ public class RecyclerViewAdapterIdentity extends RecyclerView.Adapter<RecyclerVi
     @NonNull
     @Override
     public IdentityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_card_view, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_card_view, parent,false);
         IdentityViewHolder viewHolder = new IdentityViewHolder(view, mListener);
         return viewHolder;
     }

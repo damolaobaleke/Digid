@@ -10,12 +10,13 @@
     <string name="cards">Cards</string>
     <string name="id_s">Ids</string>
     <string name="invoices">Invoices</string>
-    <string name="your_cards_are_displayed_here">Your <b><font color="#0433B8">cards</font></b> are displayed<br/> here</string>
-    <string name="your_ids_are_displayed_here">Your <b><font color="#0433B8">ids</font></b> are displayed<br/> here</string>
+    <string name="your_cards_are_displayed_here">Your <b><font color="#0433B8">cards</font></b> are displayed<br /> here</string>
+    <string name="your_ids_are_displayed_here">Your <b><font color="#0433B8">ids</font></b> are displayed<br /> here</string>
     <string name="scan">Scan</string>
     <string name="pick_an_identity">Pick an Identity type to scan</string>
-    <string name="your_invoices_are_displayed_here">Your <b><font color="#0433B8">invoices</font></b> are displayed<br/> here</string>
+    <string name="your_invoices_are_displayed_here">Your <b><font color="#0433B8">invoices</font></b> are displayed<br /> here</string>
     <string name="account">Account</string>
+    <string name="reveal_cvv"><u><b>Reveal<font color="#0433B8"> cvv</font></b></u></string>
 
     <string-array name="identities">
         <item>Drivers License</item>

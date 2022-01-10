@@ -7,15 +7,18 @@ import androidx.room.TypeConverters;
 
 import com.softroniiks.digid.model.DriverLicense;
 import com.softroniiks.digid.model.User;
+import com.softroniiks.digid.utils.CardDao;
 import com.softroniiks.digid.utils.Converters;
 import com.softroniiks.digid.utils.IdentityDao;
 import com.softroniiks.digid.utils.UserDao;
 
-@Database(entities = {User.class, DriverLicense.class}, version = 1)
+@Database(entities = {User.class, DriverLicense.class, Card.class}, version = 1)
 @TypeConverters(Converters.class)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();
 
     public abstract IdentityDao identityDao();
+
+    public abstract CardDao cardDao();
 }
