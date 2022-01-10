@@ -49,4 +49,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_baseline_receipt_long_24"
+        app:layout_constraintBottom_toTopOf="@+id/text_notifications"
+        app:layout_constraintEnd_toEndOf="@+id/text_notifications"
+        app:layout_constraintStart_toStartOf="@+id/text_notifications" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,11 +26,11 @@ public class DriverLicense {
     private int dlUid;
 
     @ColumnInfo(name = "date_of_birth")
-    private java.sql.Date dob;
+    private String dob;
     @ColumnInfo(name = "date_of_expiry")
-    private java.sql.Date doe;
+    private String doe;
     @ColumnInfo(name = "date_of_issue")
-    private java.sql.Date doi;
+    private String doi;  //java.sql.Date
     @ColumnInfo(name = "documentNumber")
     private final String documentNumber;
     @ColumnInfo(name = "address")
@@ -43,10 +43,12 @@ public class DriverLicense {
     private final String sex;
     @ColumnInfo(name = "vehicleClass")
     private final String vehicleClass;
+    @ColumnInfo(name = "driver_image")
+    private final String driveImageUri;
     @ColumnInfo(name = "ownerId")
     private String ownerId;
 
-    public DriverLicense(Date dob, Date doe, Date doi, String documentNumber, String firstName, String lastName, String sex, String vehicleClass, String address) {
+    public DriverLicense(String dob, String doe, String doi, String documentNumber, String firstName, String lastName, String sex, String vehicleClass, String address, String driveImageUri) {
         this.dob = dob;
         this.doe = doe;
         this.doi = doi;
@@ -56,6 +58,7 @@ public class DriverLicense {
         this.sex = sex;
         this.vehicleClass = vehicleClass;
         this.address = address;
+        this.driveImageUri = driveImageUri;
     }
 
     public void setOwnerId(String ownerId) {
@@ -66,15 +69,15 @@ public class DriverLicense {
         this.dlUid = dlUid;
     }
 
-    public Date getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public Date getDoe() {
+    public String getDoe() {
         return doe;
     }
 
-    public Date getDoi() {
+    public String getDoi() {
         return doi;
     }
 
@@ -108,6 +111,10 @@ public class DriverLicense {
 
     public String getAddress() {
         return address;
+    }
+
+    public String getDriveImageUri() {
+        return driveImageUri;
     }
 }
 

@@ -9,14 +9,15 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/outlinedTextFieldFullName"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/full_name"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="40dp"
+        android:hint="@string/full_name"
         android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appLogo"
         app:startIconDrawable="@drawable/ic_baseline_email_24">
 
@@ -29,14 +30,15 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/outlinedTextFieldEmail"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/email_address"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="20dp"
+        android:hint="@string/email_address"
         android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/outlinedTextFieldFullName"
         app:startIconDrawable="@drawable/ic_baseline_email_24">
 
@@ -49,16 +51,17 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/outlinedTextFieldPassword"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/password"
         android:layout_marginTop="20dp"
+        android:hint="@string/password"
         android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="@id/outlinedTextFieldEmail"
+        app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="@id/outlinedTextFieldEmail"
+        app:layout_constraintStart_toStartOf="@id/outlinedTextFieldEmail"
         app:layout_constraintTop_toBottomOf="@+id/outlinedTextFieldEmail"
-        app:startIconDrawable="@drawable/ic_baseline_lock_24"
-        app:endIconMode="password_toggle">
+        app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordEditText"
@@ -70,11 +73,13 @@
     <Button
         android:id="@+id/loginButton"
         android:layout_width="0dp"
-        android:layout_height="35dp"
+        android:layout_height="48dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/custom_buttons"
         android:text="Login"
         android:textAllCaps="false"
+        android:textColor="@color/softroniiks_blue"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/outlinedTextFieldPassword"
         app:layout_constraintStart_toStartOf="@+id/outlinedTextFieldPassword"
         app:layout_constraintTop_toBottomOf="@+id/outlinedTextFieldPassword" />
@@ -82,11 +87,13 @@
     <Button
         android:id="@+id/signUpButton"
         android:layout_width="0dp"
-        android:layout_height="35dp"
+        android:layout_height="48dp"
         android:layout_marginTop="50dp"
+        android:background="@drawable/custom_buttons"
         android:text="Sign up"
         android:textAllCaps="false"
-        android:background="@drawable/custom_buttons"
+        android:textColor="@color/softroniiks_blue"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/outlinedTextFieldPassword"
         app:layout_constraintStart_toStartOf="@+id/outlinedTextFieldPassword"
         app:layout_constraintTop_toBottomOf="@+id/loginButton" />

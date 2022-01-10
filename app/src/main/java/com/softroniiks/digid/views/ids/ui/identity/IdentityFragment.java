@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,9 +47,12 @@ import com.softroniiks.digid.model.DriverLicense;
 import com.softroniiks.digid.model.UserAndDriverLicense;
 import com.softroniiks.digid.utils.SpacesItemDecoration;
 
+import java.io.ByteArrayOutputStream;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -60,12 +64,19 @@ public class IdentityFragment extends Fragment {
     private BlinkIdRecognizer blinkIdRecognizer;
     private RecognizerBundle recognizerBundle;
     BlinkIdRecognizer.Result idRecognizerResult;
+    DriverLicense driverLicense;
     private final static String TAG = "Identity Fragment";
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private String selectedId = "";
     String[] fullName;
     String[] lastName;
+    Bitmap image;
+
+    Date currentDate;
+    Date expiryDate;
+
+    String mDateOfBirth, mDateOfExpiry, mDateOfIssue;
 
     ActivityResultLauncher<Intent> activityResultLauncher;
 
@@ -113,8 +124,8 @@ public class IdentityFragment extends Fragment {
             @Override
             public void onChanged(UserAndDriverLicense userAndDriverLicense) {
 
-                if(userAndDriverLicense != null)
-                recyclerViewAdapterIdentity = new RecyclerViewAdapterIdentity(userAndDriverLicense.driverLicense);
+                if (userAndDriverLicense != null)
+                    recyclerViewAdapterIdentity = new RecyclerViewAdapterIdentity(userAndDriverLicense.driverLicense);
                 layoutManager = new LinearLayoutManager(requireContext());
 
                 if (recyclerViewAdapterIdentity.getItemCount() > 0) {
@@ -211,7 +222,7 @@ public class IdentityFragment extends Fragment {
 
                             if (idRecognizerResult.getFaceImage() != null) {
                                 showDialogue(fullName[1] + "\n" + lastName[0], idRecognizerResult.getSex(), idRecognizerResult.getAge(), idRecognizerResult.getDateOfBirth().getDate()
-                                        , idRecognizerResult.getDateOfExpiry().getDate(),
+                                        , idRecognizerResult.getDateOfExpiry().getDate(), idRecognizerResult.getDateOfIssue().getDate(),
                                         idRecognizerResult.getDocumentNumber(), idRecognizerResult.getAddress(), idRecognizerResult.getDriverLicenseDetailedInfo().getVehicleClass(), idRecognizerResult.getFaceImage());
                             } else {
                                 Log.i(TAG, "face image was null");
@@ -251,7 +262,7 @@ public class IdentityFragment extends Fragment {
     //}
 
     //Date needs to be stored as JDBC Sql format --. microblink date uses sql date
-    public void showDialogue(String fullNamee, String sex, int age, com.microblink.results.date.Date dateOfBirth, com.microblink.results.date.Date dateOfExpiry, String docNum, String addrss, String vehicleClass, Image face) {
+    public void showDialogue(String fullNamee, String sex, int age, com.microblink.results.date.Date dateOfBirth, com.microblink.results.date.Date dateOfExpiry, com.microblink.results.date.Date dateOfIssue, String docNum, String addrss, String vehicleClass, Image face) {
         View view = View.inflate(requireContext(), R.layout.custom_card_dialogue, null);
 
         TextView documentNumber = view.findViewById(R.id.documentNumber);
@@ -271,9 +282,17 @@ public class IdentityFragment extends Fragment {
         address.setText(addrss);
         vechicleClass.setText(vehicleClass);
 
+        mDateOfBirth = dateOfBirth.toString();
+        mDateOfExpiry = dateOfExpiry.toString();
+        mDateOfIssue = dateOfIssue.toString();
+
         if (face != null) {
-            Bitmap image = face.convertToBitmap();
+            image = face.convertToBitmap();
             driverFace.setImageBitmap(image);
+
+            //Send POST REQUEST TO ENDPOINT TO GENERATE ABSOLUTE PATH FROM IMAGE BITMAP
+            //Get absolute path from response and store in sql(room)
+
         } else {
             Log.i(TAG, "face image was null");
         }
@@ -325,7 +344,15 @@ public class IdentityFragment extends Fragment {
             }
         });
 
-        scan.setOnClickListener(v -> startScanActivity());
+        //TODO: Create identity constants class
+        scan.setOnClickListener(v -> {
+            if (selectedId.equals("Drivers License")) {
+                startScanActivity();
+            } else {
+                Toast.makeText(requireContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         close.setOnClickListener(v -> bottomSheetDialog.dismiss());
 
         bottomSheetDialog.setContentView(view);
@@ -355,13 +382,17 @@ public class IdentityFragment extends Fragment {
 
     //TODO: Fix dob, doi, doe for db store, also store faceimage(think of what to store as BLOB ?) or store in firebase storage
     public void storeData() {
-        DriverLicense driverLicense = new DriverLicense(
-                convertMicroBlinkDate(idRecognizerResult.getDateOfBirth().getDate()),
-                convertMicroBlinkDate(idRecognizerResult.getDateOfExpiry().getDate()),
-                convertMicroBlinkDate(idRecognizerResult.getDateOfIssue().getDate()),
-                idRecognizerResult.getDocumentNumber(), fullName[1],
+        driverLicense = new DriverLicense(
+                mDateOfBirth,
+                mDateOfExpiry,
+                mDateOfIssue,
+                idRecognizerResult.getDocumentNumber(),
+                fullName[1],
                 lastName[0],
-                idRecognizerResult.getSex(), idRecognizerResult.getDriverLicenseDetailedInfo().getVehicleClass(), idRecognizerResult.getAddress());
+                idRecognizerResult.getSex(),
+                idRecognizerResult.getDriverLicenseDetailedInfo().getVehicleClass(),
+                idRecognizerResult.getAddress(),
+                bitmapToString(image)); //absolute path not base64 String, currently base64 String
 
         driverLicense.setOwnerId(mAuth.getUid());
         AsyncTask.execute(() -> {
@@ -369,5 +400,31 @@ public class IdentityFragment extends Fragment {
         });
 
         Toast.makeText(requireContext(), "Saved Successfully!", Toast.LENGTH_SHORT).show();
+    }
+
+    /**Driver face image conversion--> Base64 string*/
+    //TODO: find a way of storing and converting a bitmap image to an absolute path(string to be used for image). DO NOT USE A BLOB
+    private String bitmapToString(Bitmap bitmap) {
+        if (bitmap != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] bytes = stream.toByteArray();// Convert to byte array
+            return Base64.encodeToString(bytes, Base64.DEFAULT);
+        } else {
+            return "";
+        }
+    }
+
+    private Date stringToDate(String date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        return Date.valueOf(simpleDateFormat.format(date));
+    }
+
+    private void calculateExpiry(){
+        String currentMoment = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Calendar.getInstance().getTime());
+
+        currentDate = stringToDate(currentMoment);
+        expiryDate = stringToDate(driverLicense.getDoe());
+
     }
 }

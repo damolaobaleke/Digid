@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.AsyncNotedAppOp;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.microblink.blinkcard.entities.recognizers.blinkcard.BlinkCardProcessingStatus;
 import com.microblink.blinkcard.entities.recognizers.blinkcard.BlinkCardRecognizer;
 import com.microblink.blinkcard.entities.recognizers.blinkcard.Issuer;
+import com.microblink.blinkcard.image.Image;
 import com.microblink.blinkcard.uisettings.BlinkCardUISettings;
 import com.softroniiks.digid.R;
 import com.softroniiks.digid.model.Card;
@@ -76,6 +78,9 @@ public class CardFragment extends Fragment implements View.OnClickListener {
         imageCreditCard = view.findViewById(R.id.imageCreditCard);
 
         blinkCardRecognizer = new BlinkCardRecognizer();
+        blinkCardRecognizer.setReturnFullDocumentImage(true);
+        blinkCardRecognizer.setExtractIban(true);
+
         cardRecognizerBundle = new com.microblink.blinkcard.entities.recognizers.RecognizerBundle(blinkCardRecognizer);
 
         //observer -update UI
@@ -192,43 +197,14 @@ public class CardFragment extends Fragment implements View.OnClickListener {
                 assert  result.getIssuer() != null;
                 setCardType(result.getIssuer());
 
-                showCardDialogue(result.getCardNumber(), result.getCvv(), result.getOwner(), expDate[expDate.length - 1], cardIssImage);
+
+
+                showCardDialogue(result.getCardNumber(), result.getCvv(), result.getOwner(), expDate[expDate.length - 1], cardIssImage, result.getFirstSideFullDocumentImage());
 
                 card = new Card(result.getCardNumber(), expDate[expDate.length - 1], result.getCvv(), result.getOwner(), result.getIssuer().toString(), cardIssImage);
                 card.setOwnerId(mAuth.getUid());
             }
 
-        }
-    }
-
-    private void showCardDialogue(String cardNumber, String cvv, String fullName, String expDate, int issuer) {
-        View view = getLayoutInflater().inflate(R.layout.custom_credit_card_view, null);
-
-        TextView number = view.findViewById(R.id.cardNumber);
-        cvc = view.findViewById(R.id.debitCardCvv);
-        TextView name = view.findViewById(R.id.cardFullName);
-        TextView expiryDate = view.findViewById(R.id.debitCardExpDate);
-        ImageView cardIssuer = view.findViewById(R.id.cardIssuerImage);
-        revealCvvButton = view.findViewById(R.id.revealCvvText);
-
-        number.setText(cardNumber);
-        cvc.setText(cvv);
-        name.setText(fullName);
-        expiryDate.setText(expDate);
-        cardIssuer.setImageDrawable(ContextCompat.getDrawable(requireContext(), issuer));
-
-        revealCvvButton.setOnClickListener(this);
-
-        new AlertDialog.Builder(requireContext()).setView(view).setPositiveButton("Save", (dialog, which) -> addACard()).create().show();
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        if (cvc.getVisibility() == View.INVISIBLE) {
-            cvc.setVisibility(VISIBLE);
-        } else {
-            cvc.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -253,9 +229,50 @@ public class CardFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    private void showCardDialogue(String cardNumber, String cvv, String fullName, String expDate, int issuer, Image cardFrImage) {
+        View view = getLayoutInflater().inflate(R.layout.custom_credit_card_view, null);
+
+        TextView number = view.findViewById(R.id.cardNumber);
+        cvc = view.findViewById(R.id.debitCardCvv);
+        TextView name = view.findViewById(R.id.cardFullName);
+        TextView expiryDate = view.findViewById(R.id.debitCardExpDate);
+        ImageView cardIssuer = view.findViewById(R.id.cardIssuerImage);
+        ImageView cardFrontImage = view.findViewById(R.id.cardFrontImage);
+        revealCvvButton = view.findViewById(R.id.revealCvvText);
+
+        number.setText(cardNumber);
+        cvc.setText(cvv);
+        name.setText(fullName);
+        expiryDate.setText(expDate);
+        cardIssuer.setImageDrawable(ContextCompat.getDrawable(requireContext(), issuer));
+
+        if(cardFrImage != null) {
+            cardFrontImage.setImageBitmap(cardFrImage.convertToBitmap());
+        }else{
+            Log.i(TAG, "Card front image was null");
+        }
+
+        revealCvvButton.setOnClickListener(this);
+
+        new AlertDialog.Builder(requireContext()).setView(view).setPositiveButton("Save", (dialog, which) -> addACard()).create().show();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if (cvc.getVisibility() == View.INVISIBLE) {
+            cvc.setVisibility(VISIBLE);
+        } else {
+            cvc.setVisibility(View.INVISIBLE);
+        }
+    }
+
+
     public void addACard() {
         AsyncTask.execute(() -> {
             cardViewModel.addCard(card);
         });
     }
+
+    //TODO: Store cardfrontimage URI(base64)
 }

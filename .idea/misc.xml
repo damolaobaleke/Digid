@@ -20,8 +20,7 @@
         <entry key="app/src/main/res/layout/custom_add_id_sheet.xml" value="0.27546296296296297" />
         <entry key="app/src/main/res/layout/custom_card_dialogue.xml" value="0.33" />
         <entry key="app/src/main/res/layout/custom_card_view.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/custom_credit_card_view.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/debit_card.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/custom_credit_card_view.xml" value="0.27546296296296297" />
         <entry key="app/src/main/res/layout/fragment_card.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.27546296296296297" />
         <entry key="app/src/main/res/layout/fragment_identity.xml" value="0.27546296296296297" />

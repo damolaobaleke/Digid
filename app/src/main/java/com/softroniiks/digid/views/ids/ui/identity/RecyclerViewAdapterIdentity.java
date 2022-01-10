@@ -1,8 +1,13 @@
 package com.softroniiks.digid.views.ids.ui.identity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,6 +53,12 @@ public class RecyclerViewAdapterIdentity extends RecyclerView.Adapter<RecyclerVi
         StringBuilder name = new StringBuilder();
         name.append(driverLicense.getFirstName()).append(" ").append(driverLicense.getLastName());
         holder.fullName.setText(name);
+
+        //OPTION 1: Use picasso to load in absolute path image, currently Base64 String. URI only works for local resources in android
+        //holder.driverImage.setImageURI(Uri.parse(driverLicense.getDriveImageUri()));
+
+        //OPTION 2: Convert Base64 encoding stored back into Bitmap for display
+        holder.driverImage.setImageBitmap(base64ToBitmap(driverLicense.getDriveImageUri()));
     }
 
     @Override
@@ -75,6 +86,7 @@ public class RecyclerViewAdapterIdentity extends RecyclerView.Adapter<RecyclerVi
         TextView address;
         TextView sex;
         TextView fullName;
+        ImageView driverImage;
 
         public IdentityViewHolder(@NonNull View itemView, onItemClickListener listener) {
             super(itemView);
@@ -86,6 +98,7 @@ public class RecyclerViewAdapterIdentity extends RecyclerView.Adapter<RecyclerVi
             address = itemView.findViewById(R.id.address);
             sex = itemView.findViewById(R.id.sex);
             fullName = itemView.findViewById(R.id.full_name);
+            driverImage = itemView.findViewById(R.id.driverLicenseImage);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -110,5 +123,11 @@ public class RecyclerViewAdapterIdentity extends RecyclerView.Adapter<RecyclerVi
             });
 
         }
+    }
+
+    private Bitmap base64ToBitmap(String base64EncodedImage){
+        byte[] decodedString = Base64.decode(base64EncodedImage, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        return decodedByte;
     }
 }
