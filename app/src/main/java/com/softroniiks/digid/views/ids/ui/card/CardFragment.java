@@ -7,8 +7,10 @@ import android.app.AsyncNotedAppOp;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,10 @@ import com.microblink.blinkcard.uisettings.BlinkCardUISettings;
 import com.softroniiks.digid.R;
 import com.softroniiks.digid.model.Card;
 import com.softroniiks.digid.model.UserAndCard;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CardFragment extends Fragment implements View.OnClickListener {
@@ -103,7 +109,8 @@ public class CardFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onItemClicked(int position) {
                         Card card = userAndCard.cards.get(position);
-                        //Intent
+                        //TODO: Pop up card original doc image in dialogue
+                        showCardPopUp(base64ToBitmap(card.getCardFrontImageUri()));
                     }
 
                     @Override
@@ -198,10 +205,10 @@ public class CardFragment extends Fragment implements View.OnClickListener {
                 setCardType(result.getIssuer());
 
 
-
                 showCardDialogue(result.getCardNumber(), result.getCvv(), result.getOwner(), expDate[expDate.length - 1], cardIssImage, result.getFirstSideFullDocumentImage());
 
-                card = new Card(result.getCardNumber(), expDate[expDate.length - 1], result.getCvv(), result.getOwner(), result.getIssuer().toString(), cardIssImage);
+                card = new Card(result.getCardNumber(), expDate[expDate.length - 1], result.getCvv(), result.getOwner(), result.getIssuer().toString(), cardIssImage,
+                        bitmapToString(result.getFirstSideFullDocumentImage().convertToBitmap()));
                 card.setOwnerId(mAuth.getUid());
             }
 
@@ -274,5 +281,31 @@ public class CardFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    //TODO: Store cardfrontimage URI(base64)
+    private void showCardPopUp(Bitmap cardFrontImage){
+        View view  =  getLayoutInflater().inflate(R.layout.pop_up_card,null);
+
+        ImageView cardImage = view.findViewById(R.id.fullFrontCardImage);
+
+        cardImage.setImageBitmap(cardFrontImage);
+        cardImage.setVisibility(VISIBLE);
+
+        new AlertDialog.Builder(requireContext()).setView(view).create().show();
+    }
+
+    private String bitmapToString(Bitmap bitmap) {
+        if (bitmap != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] bytes = stream.toByteArray();// Convert to byte array
+            return Base64.encodeToString(bytes, Base64.DEFAULT);
+        } else {
+            return "";
+        }
+    }
+
+    private Bitmap base64ToBitmap(String base64EncodedImage){
+        byte[] decodedString = Base64.decode(base64EncodedImage, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        return decodedByte;
+    }
 }

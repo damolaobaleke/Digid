@@ -143,6 +143,7 @@ public class IdentityFragment extends Fragment {
                         DriverLicense driverLicense = userAndDriverLicense.driverLicense.get(position);
 
                         Toast.makeText(requireContext(), driverLicense.getFirstName().toLowerCase(Locale.ROOT), Toast.LENGTH_SHORT).show();
+                        //TODO: Pop up drivers license original doc image in dialogue
 
                     }
 

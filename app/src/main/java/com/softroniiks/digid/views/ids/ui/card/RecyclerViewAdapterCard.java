@@ -4,6 +4,9 @@ import static android.view.View.INVISIBLE;
 import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +58,9 @@ public class RecyclerViewAdapterCard extends RecyclerView.Adapter<RecyclerViewAd
                 holder.cvv.setVisibility(INVISIBLE);
             }
         });
+
+        holder.fullFrontImage.setImageBitmap(base64ToBitmap(card.getCardFrontImageUri()));
+
     }
 
     @Override
@@ -78,6 +84,7 @@ public class RecyclerViewAdapterCard extends RecyclerView.Adapter<RecyclerViewAd
         TextView cvv;
         TextView expDate;
         TextView fullName;
+        ImageView fullFrontImage;
         ImageView cardType;
         Button revealCvv;
 
@@ -89,6 +96,7 @@ public class RecyclerViewAdapterCard extends RecyclerView.Adapter<RecyclerViewAd
             expDate = itemView.findViewById(R.id.debitCardExpDate);
             fullName = itemView.findViewById(R.id.debitCardFullName);
             cardType = itemView.findViewById(R.id.debitCardIssuerImage);
+            fullFrontImage =itemView.findViewById(R.id.debitCardFrontImage);
             revealCvv = itemView.findViewById(R.id.showCVV);
 
             itemView.setOnClickListener(v->{
@@ -113,5 +121,11 @@ public class RecyclerViewAdapterCard extends RecyclerView.Adapter<RecyclerViewAd
 
 
         }
+    }
+
+    private Bitmap base64ToBitmap(String base64EncodedImage){
+        byte[] decodedString = Base64.decode(base64EncodedImage, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        return decodedByte;
     }
 }

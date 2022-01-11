@@ -22,16 +22,19 @@ public class Card {
     String cardType;
     @ColumnInfo(name = "card_issuer_id")
     int cardIssuerImageId;
+    @ColumnInfo(name = "card_front_image_uri")
+    String cardFrontImageUri;
     @ColumnInfo(name = "ownerId")
     public String ownerId;
 
-    public Card(String cardNumber, String expiryDate, String cvv, String fullName, String cardType, int cardIssuerImageId){
+    public Card(String cardNumber, String expiryDate, String cvv, String fullName, String cardType, int cardIssuerImageId,  String cardFrontImageUri){
         this.cardNumber = cardNumber;
         this.expiryDate = expiryDate;
         this.cvv = cvv;
         this.fullName = fullName;
         this.cardType = cardType;
         this.cardIssuerImageId = cardIssuerImageId;
+        this.cardFrontImageUri = cardFrontImageUri;
 
     }
 
@@ -69,5 +72,9 @@ public class Card {
 
     public int getCardIssuerImageId() {
         return cardIssuerImageId;
+    }
+
+    public String getCardFrontImageUri() {
+        return cardFrontImageUri;
     }
 }
