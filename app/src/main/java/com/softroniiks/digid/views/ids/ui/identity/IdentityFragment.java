@@ -124,41 +124,43 @@ public class IdentityFragment extends Fragment {
             @Override
             public void onChanged(UserAndDriverLicense userAndDriverLicense) {
 
-                if (userAndDriverLicense != null)
+                if (userAndDriverLicense != null) {
                     recyclerViewAdapterIdentity = new RecyclerViewAdapterIdentity(userAndDriverLicense.driverLicense);
-                layoutManager = new LinearLayoutManager(requireContext());
+                    layoutManager = new LinearLayoutManager(requireContext());
 
-                if (recyclerViewAdapterIdentity.getItemCount() > 0) {
-                    hint.setVisibility(View.INVISIBLE);
-                } else {
-                    hint.setVisibility(View.VISIBLE);
+                    if (recyclerViewAdapterIdentity.getItemCount() > 0) {
+                        hint.setVisibility(View.INVISIBLE);
+                    } else {
+                        hint.setVisibility(View.VISIBLE);
+                    }
+
+                    recyclerViewAdapterIdentity.setOnItemClickListener(new RecyclerViewAdapterIdentity.onItemClickListener() {
+                        @Override
+                        public void onItemClicked(int position) {
+                            //Toast.makeText(requireContext(), "the position " + position, Toast.LENGTH_SHORT).show();
+
+                            assert userAndDriverLicense != null;
+                            DriverLicense driverLicense = userAndDriverLicense.driverLicense.get(position);
+
+                            Toast.makeText(requireContext(), driverLicense.getFirstName().toLowerCase(Locale.ROOT), Toast.LENGTH_SHORT).show();
+                            //TODO: Pop up drivers license original doc image in dialogue
+
+                        }
+
+                        @Override
+                        public void onDeleteClicked(int position) {
+                            DriverLicense driverLicense = userAndDriverLicense.driverLicense.remove(position);
+
+                            AsyncTask.execute(() -> {
+                                identityViewModel.deleteIdentity(driverLicense);
+                            });
+
+                            recyclerViewAdapterIdentity.notifyItemRemoved(position);
+                        }
+                    });
+                    recyclerViewAdapterIdentity.notifyDataSetChanged();
+
                 }
-
-                recyclerViewAdapterIdentity.setOnItemClickListener(new RecyclerViewAdapterIdentity.onItemClickListener() {
-                    @Override
-                    public void onItemClicked(int position) {
-                        //Toast.makeText(requireContext(), "the position " + position, Toast.LENGTH_SHORT).show();
-
-                        assert userAndDriverLicense != null;
-                        DriverLicense driverLicense = userAndDriverLicense.driverLicense.get(position);
-
-                        Toast.makeText(requireContext(), driverLicense.getFirstName().toLowerCase(Locale.ROOT), Toast.LENGTH_SHORT).show();
-                        //TODO: Pop up drivers license original doc image in dialogue
-
-                    }
-
-                    @Override
-                    public void onDeleteClicked(int position) {
-                        DriverLicense driverLicense = userAndDriverLicense.driverLicense.remove(position);
-
-                        AsyncTask.execute(() -> {
-                            identityViewModel.deleteIdentity(driverLicense);
-                        });
-
-                        recyclerViewAdapterIdentity.notifyItemRemoved(position);
-                    }
-                });
-                recyclerViewAdapterIdentity.notifyDataSetChanged();
 
                 //Line -Divider
                 //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation());
@@ -381,7 +383,6 @@ public class IdentityFragment extends Fragment {
         return new Date(longDate);
     }
 
-    //TODO: Fix dob, doi, doe for db store, also store faceimage(think of what to store as BLOB ?) or store in firebase storage
     public void storeData() {
         driverLicense = new DriverLicense(
                 mDateOfBirth,

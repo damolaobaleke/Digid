@@ -61,7 +61,7 @@ public class CardFragment extends Fragment implements View.OnClickListener {
     private com.microblink.blinkcard.entities.recognizers.RecognizerBundle cardRecognizerBundle;
 
     Card card;
-    FirebaseAuth mAuth  = FirebaseAuth.getInstance();
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 
     private static final int BLINK_CARD_REQUEST_CODE = 3;
@@ -93,60 +93,65 @@ public class CardFragment extends Fragment implements View.OnClickListener {
         cardViewModel.getUserCards().observe(getViewLifecycleOwner(), new Observer<UserAndCard>() {
             @Override
             public void onChanged(UserAndCard userAndCard) {
-                recyclerViewAdapterCard = new RecyclerViewAdapterCard(userAndCard.cards, requireContext());
+                if (userAndCard != null) {
+                    recyclerViewAdapterCard = new RecyclerViewAdapterCard(userAndCard.cards, requireContext());
 
-                if(recyclerViewAdapterCard.getItemCount() > 0){
-                    textHintCard.setVisibility(View.INVISIBLE);
-                    imageCreditCard.setVisibility(View.INVISIBLE);
-                }else{
-                    textHintCard.setVisibility(VISIBLE);
-                    imageCreditCard.setVisibility(VISIBLE);
+                    if (recyclerViewAdapterCard.getItemCount() > 0) {
+                        textHintCard.setVisibility(View.INVISIBLE);
+                        imageCreditCard.setVisibility(View.INVISIBLE);
+                    } else {
+                        textHintCard.setVisibility(VISIBLE);
+                        imageCreditCard.setVisibility(VISIBLE);
+                    }
+
+                    recyclerViewAdapterCard.notifyDataSetChanged();
+
+                    recyclerViewAdapterCard.setOnItemClickListener(new RecyclerViewAdapterCard.OnItemClickListener() {
+                        @Override
+                        public void onItemClicked(int position) {
+                            Card card = userAndCard.cards.get(position);
+
+                            showCardPopUp(base64ToBitmap(card.getCardFrontImageUri()));
+                        }
+
+                        @Override
+                        public void onDeleteClicked(int position) {
+                            Card card = userAndCard.cards.get(position);
+
+                            AlertDialog alertDialog = new AlertDialog.Builder(requireContext()).create();
+
+                            alertDialog.setTitle("DELETE CARD");
+                            alertDialog.setMessage("Are you sure you want to delete your card ?");
+                            alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    AsyncTask.execute(() -> {
+                                        cardViewModel.deleteCard(card);
+                                    });
+
+                                    recyclerViewAdapterCard.notifyItemRemoved(position);
+                                }
+                            });
+                            alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            alertDialog.show();
+
+                        }
+                    });
+
+                    cardRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+                    cardRecyclerView.setHasFixedSize(true);
+                    cardRecyclerView.setAdapter(recyclerViewAdapterCard);
+
+
+                } else {
+                    recyclerViewAdapterCard = new RecyclerViewAdapterCard(null, requireContext());
                 }
-
-                recyclerViewAdapterCard.notifyDataSetChanged();
-
-                recyclerViewAdapterCard.setOnItemClickListener(new RecyclerViewAdapterCard.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(int position) {
-                        Card card = userAndCard.cards.get(position);
-                        //TODO: Pop up card original doc image in dialogue
-                        showCardPopUp(base64ToBitmap(card.getCardFrontImageUri()));
-                    }
-
-                    @Override
-                    public void onDeleteClicked(int position) {
-                        Card card = userAndCard.cards.get(position);
-
-                        AlertDialog alertDialog = new AlertDialog.Builder(requireContext()).create();
-
-                        alertDialog.setTitle("DELETE CARD");
-                        alertDialog.setMessage("Are you sure you want to delete your card ?");
-                        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                AsyncTask.execute(()->{
-                                    cardViewModel.deleteCard(card);
-                                });
-
-                                recyclerViewAdapterCard.notifyItemRemoved(position);
-                            }
-                        });
-                        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                        alertDialog.show();
-
-                    }
-                });
-
-                cardRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-                cardRecyclerView.setHasFixedSize(true);
-                cardRecyclerView.setAdapter(recyclerViewAdapterCard);
-
             }
         });
 
@@ -180,7 +185,7 @@ public class CardFragment extends Fragment implements View.OnClickListener {
         // load the data into all recognizers bundled within your RecognizerBundle
         try {
             cardRecognizerBundle.loadFromIntent(data);
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             Toast.makeText(requireContext(), "Card not recognized, try again", Toast.LENGTH_SHORT).show();
         }
 
@@ -201,7 +206,7 @@ public class CardFragment extends Fragment implements View.OnClickListener {
                 Log.i(TAG, "The card info==>\n" + cardInfo.toString() + " " + expDate[expDate.length - 1]);
 
                 //show dialogue with card
-                assert  result.getIssuer() != null;
+                assert result.getIssuer() != null;
                 setCardType(result.getIssuer());
 
 
@@ -215,7 +220,7 @@ public class CardFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void setCardType(Issuer issuer){
+    private void setCardType(Issuer issuer) {
         switch (issuer) {
             case Visa:
                 cardIssImage = R.drawable.mb_ic_visa;
@@ -253,9 +258,9 @@ public class CardFragment extends Fragment implements View.OnClickListener {
         expiryDate.setText(expDate);
         cardIssuer.setImageDrawable(ContextCompat.getDrawable(requireContext(), issuer));
 
-        if(cardFrImage != null) {
+        if (cardFrImage != null) {
             cardFrontImage.setImageBitmap(cardFrImage.convertToBitmap());
-        }else{
+        } else {
             Log.i(TAG, "Card front image was null");
         }
 
@@ -281,8 +286,8 @@ public class CardFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    private void showCardPopUp(Bitmap cardFrontImage){
-        View view  =  getLayoutInflater().inflate(R.layout.pop_up_card,null);
+    private void showCardPopUp(Bitmap cardFrontImage) {
+        View view = getLayoutInflater().inflate(R.layout.pop_up_card, null);
 
         ImageView cardImage = view.findViewById(R.id.fullFrontCardImage);
 
@@ -303,7 +308,7 @@ public class CardFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private Bitmap base64ToBitmap(String base64EncodedImage){
+    private Bitmap base64ToBitmap(String base64EncodedImage) {
         byte[] decodedString = Base64.decode(base64EncodedImage, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodedByte;

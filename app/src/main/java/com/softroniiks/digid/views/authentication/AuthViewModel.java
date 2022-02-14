@@ -26,6 +26,7 @@ import com.softroniiks.digid.model.User;
 import com.softroniiks.digid.model.AppDatabase;
 import com.softroniiks.digid.utils.UserDao;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class AuthViewModel extends ViewModel {
@@ -85,10 +86,11 @@ public class AuthViewModel extends ViewModel {
          mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                if(authResult.getUser() != null){
+                if(Objects.requireNonNull(authResult.getUser()).getEmail().length() > 1 ){
                     isLoggedin = true;
                 }
             }
+
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {

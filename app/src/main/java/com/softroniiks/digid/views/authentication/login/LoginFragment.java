@@ -88,6 +88,7 @@ public class LoginFragment extends Fragment {
         if (TextUtils.isEmpty(editTextEmail.getText()) || TextUtils.isEmpty(editTextPassword.getText())) {
             Toast.makeText(requireContext(), "Input's are empty", Toast.LENGTH_SHORT).show();
         } else {
+
             boolean isLoggedIn = authViewModel.logIn(editTextEmail.getText().toString(), editTextPassword.getText().toString());
 
             if (isLoggedIn) {
@@ -97,7 +98,7 @@ public class LoginFragment extends Fragment {
                 startActivity(intent);
 
             } else {
-                Toast.makeText(requireContext(), "Failed to Log in", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Try again, check your password", Toast.LENGTH_SHORT).show();
             }
         }
     }

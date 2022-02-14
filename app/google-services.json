@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "306972948170",
+    "project_id": "digid-fb1ee",
+    "storage_bucket": "digid-fb1ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306972948170:android:0e8b861d317dffdd16a633",
+        "android_client_info": {
+          "package_name": "com.softroniiks.digid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "306972948170-6it74hp3gf3o430p72h1f5pof2eiqb2s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMiOFG1I4iMNyrQYcb0C0REfVuN2oxWEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "306972948170-6it74hp3gf3o430p72h1f5pof2eiqb2s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
